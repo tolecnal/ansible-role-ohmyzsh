@@ -9,11 +9,6 @@
       - ubuntu
 
   tasks:
-    - name: Install a list of packages
-      ansible.builtin.apt:
-        pkg:
-        - zsh-syntax-highlighting
-        - zsh-autosuggestions
 
     - name: clone theme to users
       git:
