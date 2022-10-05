@@ -1,0 +1,103 @@
+- hosts: all
+  gather_facts: true
+  become: true
+  vars:
+    - themeurl: https://github.com/romkatv/powerlevel10k.git
+    - syntaxurl: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    - suggesturl: https://github.com/zsh-users/zsh-autosuggestions.git
+    - users:
+      - ubuntu
+
+  tasks:
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        pkg:
+        - zsh-syntax-highlighting
+        - zsh-autosuggestions
+
+    - name: clone theme to users
+      git:
+        repo: "{{ themeurl }}"
+        dest: /home/{{ item }}/.oh-my-zsh/custom/themes/powerlevel10k
+      with_items: "{{ users }}"
+
+    - name: clone zsh-syntax-highlighting
+      git:
+        repo: "{{ syntaxurl }}"
+        dest: /home/{{ item }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+      with_items: "{{ users }}"
+
+    - name: clone zsh-autosuggestions to users
+      git:
+        repo: "{{ suggesturl }}"
+        dest: /home/{{ item }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+      with_items: "{{ users }}"
+
+    - name: ensure theme config is added to zshrc
+      ansible.builtin.lineinfile:
+        path: /home/{{ item }}/.zshrc
+        line: source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+        create: true
+      with_items: "{{ users }}"
+
+    - name: ensure p10k config is added to zshrc
+      ansible.builtin.lineinfile:
+        path: /home/{{ item }}/.zshrc
+        line: '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+        create: true
+      with_items: "{{ users }}"
+
+    - name: copy p10k config to users
+      ansible.builtin.copy:
+        src: p10k.zsh
+        dest: /home/{{ item }}/.p10k.zsh
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0660"
+      with_items: "{{ users }}"
+
+    - name: clone theme to root
+      git:
+        repo: "{{ themeurl }}"
+        dest: /root/.oh-my-zsh/custom/themes/powerlevel10k
+
+    - name: clone zsh-syntax-highlighting to root
+      git:
+        repo: "{{ syntaxurl }}"
+        dest: /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+    - name: clone zsh-autosuggestions to root
+      git:
+        repo: "{{ suggesturl }}"
+        dest: /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+    - name: ensure theme config is added to zshrc for root
+      ansible.builtin.lineinfile:
+        path: /root/.zshrc
+        line: source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+        create: true
+
+    - name: ensure p10k config is added to zshrc
+      ansible.builtin.lineinfile:
+        path: /root/.zshrc
+        line: '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+        create: true
+
+    - name: copy p10k config to root
+      ansible.builtin.copy:
+        src: p10k.zsh
+        dest: /root/.p10k.zsh
+        owner: root
+        group: root
+        mode: "0660"
+
+  roles:
+      - { role: gsvitins.omz,
+          omz_users: [ubuntu],
+          omz_root: true,
+          omz_chsh: true,
+          omz_disable_auto_update: false,
+          omz_auto_update_interval: 7,
+          omz_plugins: "zsh-syntax-highlighting git aws ansible command-not-found composer cp docker docker-compose dotnet man colored-man-pages nmap pip postgres python rsync tmux ufw zsh-autosuggestions sudo",
+          omz_completion_waiting_dots: false
+        }
