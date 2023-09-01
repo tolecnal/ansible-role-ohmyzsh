@@ -28,6 +28,13 @@
         dest: /home/{{ item }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
       with_items: "{{ users }}"
 
+    - name: ensure .profile is sourced viz .zshrc
+      ansible.builtin.lineinfile:
+        path: /home/{{ item }}/.zshrc
+        line: source ~/.profile
+        create: true
+      with_items: "{{ users }}"
+      
     - name: ensure theme config is added to zshrc
       ansible.builtin.lineinfile:
         path: /home/{{ item }}/.zshrc
@@ -70,6 +77,12 @@
       ansible.builtin.lineinfile:
         path: /root/.zshrc
         line: source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
+        create: true
+
+    - name: ensure .profile is sourced via .zshrc
+      ansible.builtin.lineinfile:
+        path: /root/.zshrc
+        line: 'source ~/.profile'
         create: true
 
     - name: ensure p10k config is added to zshrc
