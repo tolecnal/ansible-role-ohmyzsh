@@ -7,50 +7,49 @@
     - syntaxurl: https://github.com/zsh-users/zsh-syntax-highlighting.git
     - suggesturl: https://github.com/zsh-users/zsh-autosuggestions.git
     - users:
-      - ubuntu
+        - ubuntu
 
   tasks:
-
-    - name: clone theme to users
-      git:
+    - name: "Clone theme to users"
+      ansible.builtin.git:
         repo: "{{ themeurl }}"
         dest: /home/{{ item }}/.oh-my-zsh/custom/themes/powerlevel10k
       with_items: "{{ users }}"
 
-    - name: clone zsh-syntax-highlighting
-      git:
+    - name: "Clone zsh-syntax-highlighting"
+      ansible.builtin.git:
         repo: "{{ syntaxurl }}"
         dest: /home/{{ item }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
       with_items: "{{ users }}"
 
-    - name: clone zsh-autosuggestions to users
-      git:
+    - name: "Clone zsh-autosuggestions to users"
+      ansible.builtin.git:
         repo: "{{ suggesturl }}"
         dest: /home/{{ item }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
       with_items: "{{ users }}"
 
-    - name: ensure .profile is sourced viz .zshrc
+    - name: "Ensure .profile is sourced viz .zshrc"
       ansible.builtin.lineinfile:
         path: /home/{{ item }}/.zshrc
         line: source ~/.profile
         create: true
       with_items: "{{ users }}"
-      
-    - name: ensure theme config is added to zshrc
+
+    - name: "Ensure theme config is added to zshrc"
       ansible.builtin.lineinfile:
         path: /home/{{ item }}/.zshrc
         line: source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
         create: true
       with_items: "{{ users }}"
 
-    - name: ensure p10k config is added to zshrc
+    - name: "Ensure p10k config is added to zshrc"
       ansible.builtin.lineinfile:
         path: /home/{{ item }}/.zshrc
-        line: '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+        line: "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh"
         create: true
       with_items: "{{ users }}"
 
-    - name: copy p10k config to users
+    - name: "Copy p10k config to users"
       ansible.builtin.copy:
         src: p10k.zsh
         dest: /home/{{ item }}/.p10k.zsh
@@ -59,40 +58,40 @@
         mode: "0660"
       with_items: "{{ users }}"
 
-    - name: clone theme to root
+    - name: "Clone theme to root"
       git:
         repo: "{{ themeurl }}"
         dest: /root/.oh-my-zsh/custom/themes/powerlevel10k
 
-    - name: clone zsh-syntax-highlighting to root
+    - name: "Clone zsh-syntax-highlighting to root"
       git:
         repo: "{{ syntaxurl }}"
         dest: /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
-    - name: clone zsh-autosuggestions to root
+    - name: "Clone zsh-autosuggestions to root"
       git:
         repo: "{{ suggesturl }}"
         dest: /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
-    - name: ensure theme config is added to zshrc for root
+    - name: "Ensure theme config is added to zshrc for root"
       ansible.builtin.lineinfile:
         path: /root/.zshrc
         line: source ~/.oh-my-zsh/custom/themes/powerlevel10k/powerlevel10k.zsh-theme
         create: true
 
-    - name: ensure .profile is sourced via .zshrc
+    - name: "Ensure .profile is sourced via .zshrc"
       ansible.builtin.lineinfile:
         path: /root/.zshrc
-        line: 'source ~/.profile'
+        line: "source ~/.profile"
         create: true
 
-    - name: ensure p10k config is added to zshrc
+    - name: "Ensure p10k config is added to zshrc"
       ansible.builtin.lineinfile:
         path: /root/.zshrc
-        line: '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+        line: "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh"
         create: true
 
-    - name: copy p10k config to root
+    - name: "Copy p10k config to root"
       ansible.builtin.copy:
         src: p10k.zsh
         dest: /root/.p10k.zsh
@@ -101,12 +100,13 @@
         mode: "0660"
 
   roles:
-      - { role: gsvitins.omz,
-          omz_users: [ubuntu],
-          omz_root: true,
-          omz_chsh: true,
-          omz_disable_auto_update: false,
-          omz_auto_update_interval: 7,
-          omz_plugins: "zsh-syntax-highlighting git aws ansible command-not-found composer cp docker docker-compose dotnet man colored-man-pages nmap pip postgres python rsync tmux ufw zsh-autosuggestions sudo",
-          omz_completion_waiting_dots: false
-        }
+    - {
+        role: gsvitins.omz,
+        omz_users: [ubuntu],
+        omz_root: true,
+        omz_chsh: true,
+        omz_disable_auto_update: false,
+        omz_auto_update_interval: 7,
+        omz_plugins: "zsh-syntax-highlighting git aws ansible command-not-found composer cp docker docker-compose dotnet man colored-man-pages nmap pip postgres python rsync tmux ufw zsh-autosuggestions sudo",
+        omz_completion_waiting_dots: false,
+      }
