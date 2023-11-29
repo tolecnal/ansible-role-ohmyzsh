@@ -7,7 +7,7 @@ galaxy_info:
   author: "Jostein Elvaker Haande <tolecnal@tolecnal.net"
   description: Deploy and configure Oh My Zsh with the Powerlevel 10K theme
   license: "license (BSD, MIT)"
-  min_ansible_version: "2.10.0"
+  min_ansible_version: "2.13.0"
 
   platforms:
     - name: Ubuntu
