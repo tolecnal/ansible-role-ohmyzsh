@@ -1,0 +1,19 @@
+---
+
+ohmyzsh_users: []
+ohmyzsh_chsh: true
+ohmyzsh_zsh_path: "/bin/zsh"
+
+ohmyzsh_theme: "powerlevel10k/powerlevel10k"
+ohmyzsh_case_sensitive_completion: false
+ohmyzsh_hyphen_insensitive_completion: false
+ohmyzsh_disable_auto_update: false
+ohmyzsh_auto_update_interval: 30
+ohmyzsh_disable_ls_colors: false
+ohmyzsh_disable_auto_title: false
+ohmyzsh_enable_auto_correction: true
+ohmyzsh_completion_waiting_dots: true
+ohmyzsh_history_stamps: "yyyy-mm-dd"
+ohmyzsh_plugins: "autoupdate colored-man-pages docker docker-compose git history history-substring-search kubectl nmap pip python rsync systemd tmux ubuntu vagrant vi-mode aws terraform"
+ohmyzsh_autosuggestions_plugin: true
+ohmyzsh_language: "en_US.UTF-8"

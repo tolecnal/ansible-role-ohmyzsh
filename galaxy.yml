@@ -1,0 +1,25 @@
+---
+namespace: tolecnal
+name: ohmyzsh
+version: "1.0.0"
+readme: README.md
+
+authors:
+  - "Jostein Elvaker Haande <tolecnal@tolecnal.net>"
+description: Deploy and configure Oh My Zsh with the Powerlevel 10K theme
+license:
+  - MIT
+
+tags:
+  - zsh
+  - ohmyzsh
+  - console
+  - tools
+  - linux
+
+repository: https://github.com/tolecnal/ansible-role-ohmyzsh
+documentation: https://github.com/tolecnal/ansible-role-ohmyzsh
+homepage: https://tolecnal.net
+issues: https://github.com/tolecnal/ansible-role-ohmyzsh/issues
+
+build_ignore: []

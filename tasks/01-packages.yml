@@ -1,0 +1,36 @@
+---
+- name: Install zsh shell packages on debian based distro
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+  become: true
+  when: ansible_os_family == 'Debian'
+  tags:
+    - packages
+
+- name: Install zsh shell packages on redhat based distro
+  ansible.builtin.yum:
+    name: zsh
+    state: present
+  become: true
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - packages
+
+- name: Make sure git package is installed on debian based distro
+  ansible.builtin.apt:
+    name: git
+    state: present
+  become: true
+  when: ansible_os_family == 'Debian'
+  tags:
+    - packages
+
+- name: Make sure git package is installed on redhat based distro
+  ansible.builtin.yum:
+    name: git
+    state: present
+  become: true
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - packages

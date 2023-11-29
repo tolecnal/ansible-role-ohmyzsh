@@ -1,0 +1,7 @@
+---
+
+- name: Ensure correct packages are installed
+  ansible.builtin.include_tasks: 01-packages.yml
+
+- name: Set up Oh-My-Zsh and its plugins
+  ansible.builtin.include_tasks: 02-ohmyzsh.yml
