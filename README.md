@@ -82,19 +82,22 @@ None
 
 ## Example playbook
 
-    ---
-    - name: Run Ansible Oh-My-Zsh role
-    hosts: all
-    become: true
-    gather_facts: true
+First install the role using Ansible Galaxy: `ansible-galaxy role install tolecnal.ohmyzsh`
 
-    vars:
+Then create a playbook like this, replace `ohmyzsh_users` with the user(s) you want to run the role on.
+
+    ---
+    
+    - name: Run tolecnal.ohmyzsh role
+      hosts: all
+      become: true
+      gather_facts: true
+
+      vars:
         ohmyzsh_users: tolecnal
 
-    tasks:
-        - name: Import and run the role
-        ansible.builtin.import_role:
-            name: tolecnal.ohmyzsh
+      roles:
+        - tolecnal.ohmyzsh
 
 ## License
 
