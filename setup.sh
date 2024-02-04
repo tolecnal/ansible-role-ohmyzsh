@@ -32,7 +32,7 @@ cat << EOF > "${HOME}/tolecnal.ohmyzsh/playbook.yml"
     - tolecnal.ohmyzsh
 EOF
 
-cd "${HOME}/tolecnal.ohmyzsh" || exit
+cd "${HOME}/tolecnal.ohmyzsh" || exit
 ansible-galaxy role install tolecnal.ohmyzsh
 
 printf "\nNow use:\n\tcd %s/tolecnal.ohmyzsh\n\tEdit playbook and change the user\n\tansible-playbook -i inventory.yml playbook.yml" "$HOME"
